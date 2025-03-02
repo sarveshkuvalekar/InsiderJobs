@@ -5,7 +5,7 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 
 export const AppContext = createContext()
 
-export const AppContextProvider = (props) => { 
+export const AppContextProvider = (props) => {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -13,8 +13,8 @@ export const AppContextProvider = (props) => {
     const { getToken } = useAuth()
 
     const [searchFilter, setSearchFilter] = useState({
-        title:'',
-        location:''
+        title: '',
+        location: ''
     })
 
     const [isSearched, setIsSearched] = useState(false)
@@ -30,7 +30,7 @@ export const AppContextProvider = (props) => {
     const [userApplications, setUserApplications] = useState([])
 
     //function to fetch jobs
-    const fetchJobs = async () =>{
+    const fetchJobs = async () => {
         try {
 
             const { data } = await axios.get(backendUrl + '/api/jobs')
@@ -44,11 +44,11 @@ export const AppContextProvider = (props) => {
 
         } catch (error) {
             toast.error(error.message)
-        } 
+        }
     }
 
     //function to fetch company data
-    const fetchCompanyData = async() => {
+    const fetchCompanyData = async () => {
         try {
 
             const { data } = await axios.get(backendUrl + '/api/company/company', { headers: { token: companyToken } })
@@ -86,8 +86,8 @@ export const AppContextProvider = (props) => {
     }
 
 
-     // Function to Fetch User's Applied Applications
-     const fetchUserApplications = async () => {
+    // Function to Fetch User's Applied Applications
+    const fetchUserApplications = async () => {
         try {
 
             const token = await getToken()
@@ -106,7 +106,7 @@ export const AppContextProvider = (props) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchJobs()
 
         const storedCompanyToken = localStorage.getItem('companyToken')
@@ -114,10 +114,10 @@ export const AppContextProvider = (props) => {
         if (storedCompanyToken) {
             setCompanyToken(storedCompanyToken)
         }
-    },[])
+    }, [])
 
-     // Fetch Company Data if Company Token is Available
-    useEffect(()=>{
+    // Fetch Company Data if Company Token is Available
+    useEffect(() => {
         if (companyToken) {
             fetchCompanyData()
         }
@@ -132,8 +132,8 @@ export const AppContextProvider = (props) => {
     }, [user])
 
     const value = {
-        setSearchFilter,searchFilter,
-        isSearched,setIsSearched,
+        setSearchFilter, searchFilter,
+        isSearched, setIsSearched,
         jobs, setJobs,
         showRecruiterLogin, setShowRecruiterLogin,
         companyToken, setCompanyToken,
